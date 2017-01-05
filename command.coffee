@@ -43,10 +43,7 @@ class Command
       console.log packageJSON.version
       process.exit 0
 
-    if _.isEmpty dateStr
-      console.error @usage parser.help({includeEnv: true})
-      console.error colors.red 'Missing required parameter <date-str>'
-      process.exit 1
+    dateStr = moment().format() if _.isEmpty dateStr
 
     return {dateStr, iso: options.iso, utc: options.utc}
 
@@ -70,8 +67,12 @@ class Command
 
   usage: (optionsStr) =>
     """
-    usage: what-the-date [OPTIONS] <date-str>
-    options:
+    USAGE: what-the-date [OPTIONS] [date-str]
+
+    DESCRIPTION:
+      converts any date into human readable format. Defaults to now if no date-string is provided
+
+    OPTIONS:
     #{optionsStr}
     """
 
